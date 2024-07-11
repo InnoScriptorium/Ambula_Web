@@ -182,9 +182,7 @@ const UserSuggestions: React.FC = () => {
           </SuggestionItem>
         ))}
       </SuggestionContainer>
-      <StyledButton variant="contained" color="primary" onClick={handleContinue}>
-        Continue
-      </StyledButton>
+      
       <InfoContainer>
         <InfoItem variant="body1">
           {validations.minLength ? (
@@ -227,6 +225,9 @@ const UserSuggestions: React.FC = () => {
           Alphanumeric - only numbers, only letters, or any combination of numbers and letters is allowed
         </InfoItem>
       </InfoContainer>
+      <StyledButton variant="contained" color="primary" onClick={handleContinue}>
+        Continue
+      </StyledButton>
     </StyledContainer>
   );
 };

@@ -53,7 +53,7 @@ const StyledContainer = styled(Container)({
   boxShadow: '0 0 10px rgba(0,0,0,0.1)',
   marginTop: '64px',
   textAlign: 'center',
-  width: '70%',
+  width: '100%',
   margin: '64px auto',
 });
 
@@ -144,7 +144,7 @@ const ProfileDetails: React.FC = () => {
       <StyledSubContainer>
         <Typography variant="h5">Name</Typography>
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label={renderMandatoryLabel("First Name")}
               value={details.firstName}
@@ -154,7 +154,7 @@ const ProfileDetails: React.FC = () => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label="Middle Name"
               value={details.middleName}
@@ -164,7 +164,7 @@ const ProfileDetails: React.FC = () => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label={renderMandatoryLabel("Last Name")}
               value={details.lastName}
@@ -181,7 +181,7 @@ const ProfileDetails: React.FC = () => {
       <StyledSubContainer>
         <Typography variant="h5">Date of Birth</Typography>
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={3}>
             <TextField
               select
               label={renderMandatoryLabel("Day")}
@@ -196,7 +196,7 @@ const ProfileDetails: React.FC = () => {
               ))}
             </TextField>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={3}>
             <TextField
               select
               label={renderMandatoryLabel("Month")}
@@ -211,7 +211,7 @@ const ProfileDetails: React.FC = () => {
               ))}
             </TextField>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={3}>
             <TextField
               select
               label={renderMandatoryLabel("Year")}
@@ -226,7 +226,7 @@ const ProfileDetails: React.FC = () => {
               ))}
             </TextField>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={3}>
             <TextField
               select
               label={renderMandatoryLabel("Gender")}
@@ -274,7 +274,7 @@ const ProfileDetails: React.FC = () => {
               InputLabelProps={{ shrink: true }}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <TextField
               select
               label={renderMandatoryLabel("State")}
@@ -289,7 +289,7 @@ const ProfileDetails: React.FC = () => {
               ))}
             </TextField>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <TextField
               select
               label={renderMandatoryLabel("District")}
@@ -308,7 +308,7 @@ const ProfileDetails: React.FC = () => {
                   ))}
             </TextField>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4}>
             <TextField
               label={renderMandatoryLabel("Pincode")}
               value={details.pincode}

@@ -37,7 +37,7 @@ const Congratulations: React.FC = () => {
   return (
     <StyledContainer>
       <GreenCheckmark />
-      <StyledTypography variant="h4">Congratulations!</StyledTypography>
+      <StyledTypography variant="h6">Congratulations!</StyledTypography>
       <Typography variant="body1">
         ABHA Address
       </Typography>

@@ -36,7 +36,13 @@ const StyledTextField = styled(TextField)({
   },
   marginBottom: '16px',
   width: '50%',
+  '@media screen and (max-width: 600px)': {
+    width: '100%', // Adjust width for smaller screens
+  },
+ 
 });
+
+
 
 const StyledWarningText = styled(Typography)({
   color: 'red',
