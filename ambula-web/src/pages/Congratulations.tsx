@@ -3,7 +3,7 @@ import { Container, Typography, Box } from '@mui/material';
 import { styled } from '@mui/system';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store'; // Adjust the path to match your Redux setup
+import { RootState } from '../store'; 
 
 const StyledContainer = styled(Container)({
   backgroundColor: '#ffffff',
@@ -27,7 +27,7 @@ const GreenCheckmark = styled(CheckCircleOutlineIcon)({
 });
 
 const RedText = styled(Box)({
-  color: '#f44336',  // Red color
+  color: '#f44336',  
   fontWeight: 'bold',
 });
 

@@ -5,8 +5,8 @@ import { styled } from '@mui/system';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store'; // Adjust the path to match your Redux setup
-import { setAbhaAddress } from '../store/slices/userSlice'; // Assuming you have a setProfileDetails action
+import { RootState } from '../store'; 
+import { setAbhaAddress } from '../store/slices/userSlice'; 
 
 const StyledContainer = styled(Container)({
   backgroundColor: '#ffffff',
@@ -54,8 +54,8 @@ const FixedText = styled(Typography)({
 const SuggestionContainer = styled('div')({
   display: 'flex',
   flexWrap: 'wrap',
-  gap: '8px', // Adjust gap between suggestions
-  marginBottom: '16px', // Add margin bottom for spacing
+  gap: '8px', 
+  marginBottom: '16px', 
 });
 
 const SuggestionItem = styled(Typography)({
@@ -75,11 +75,11 @@ const InfoItem = styled(Typography)({
 });
 
 const GreenLineMessage = styled(Typography)({
-  color: '#4caf50', // Green color
+  color: '#4caf50', 
 });
 
 const ErrorMessage = styled(Typography)({
-  color: '#f44336', // Red color
+  color: '#f44336', 
 });
 
 const UserSuggestions: React.FC = () => {
@@ -176,7 +176,7 @@ const UserSuggestions: React.FC = () => {
             key={index}
             variant="body1"
             onClick={() => handleSuggestionClick(suggestion)}
-            style={{ backgroundColor: abhaAddress === suggestion ? '#2196f3' : '#f0f0f0' }} // Change background color on click
+            style={{ backgroundColor: abhaAddress === suggestion ? '#2196f3' : '#f0f0f0' }} 
           >
             {suggestion}
           </SuggestionItem>
@@ -225,7 +225,12 @@ const UserSuggestions: React.FC = () => {
           Alphanumeric - only numbers, only letters, or any combination of numbers and letters is allowed
         </InfoItem>
       </InfoContainer>
-      <StyledButton variant="contained" color="primary" onClick={handleContinue}>
+      <StyledButton
+        variant="contained"
+        color="primary"
+        onClick={handleContinue}
+        disabled={!abhaAddress || isInvalidLength || !isAvailable}
+      >
         Continue
       </StyledButton>
     </StyledContainer>

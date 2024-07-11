@@ -1,5 +1,3 @@
-// userSlice.ts
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserState {
@@ -22,7 +20,7 @@ interface UserState {
     termsAccepted: boolean;
   };
   aadharNumber: string;
-  abhaAddress: string; // New property for ABHA Address
+  abhaAddress: string; 
 }
 
 const initialState: UserState = {
@@ -45,7 +43,7 @@ const initialState: UserState = {
     termsAccepted: false,
   },
   aadharNumber: '',
-  abhaAddress: '', // Initial value for ABHA Address
+  abhaAddress: '', 
 };
 
 const userSlice = createSlice({

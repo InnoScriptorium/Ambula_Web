@@ -37,12 +37,10 @@ const StyledTextField = styled(TextField)({
   marginBottom: '16px',
   width: '50%',
   '@media screen and (max-width: 600px)': {
-    width: '100%', // Adjust width for smaller screens
+    width: '100%', 
   },
  
 });
-
-
 
 const StyledWarningText = styled(Typography)({
   color: 'red',
@@ -104,11 +102,17 @@ const Registration: React.FC = () => {
   const isAadharValid = aadharNumber.length === 12 && !isNaN(Number(aadharNumber));
   const isFormValid = (selectedOption === 'mobile' && isMobileValid) || (selectedOption === 'aadhar' && isAadharValid && termsAccepted);
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!/[0-9]/.test(event.key)) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <>
       <WelcomeContainer>
         <Typography variant="h5" component="h2" style={{ marginBottom: '16px' }}>
-          Welcome !
+          Welcome!
         </Typography>
         <Typography variant="body1" style={{ marginBottom: '24px' }}>
           You are about to create your ABHA number and ABHA Address
@@ -138,6 +142,7 @@ const Registration: React.FC = () => {
               }}
               variant="outlined"
               color="primary"
+              onKeyPress={handleKeyPress}
             />
             <StyledWarningText variant="body2">Complete the KYC verification to get the unique ABHA number</StyledWarningText>
           </>
@@ -155,6 +160,7 @@ const Registration: React.FC = () => {
               inputProps={{ maxLength: 12 }}
               variant="outlined"
               color="primary"
+              onKeyPress={handleKeyPress}
             />
             <Typography variant="body2" color="textSecondary" style={{ marginBottom: '16px', fontWeight: 'bold' }}>
               Your ABHA Number & ABHA Address both will be created

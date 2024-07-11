@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Grid } from '@mui/material';
 import { setOtp } from '../store/slices/userSlice';
-import { RootState } from '../store'; // Adjust the path to match your Redux setup
+import { RootState } from '../store'; 
 import { styled } from '@mui/system';
 
 const StyledContainer = styled(Container)({
@@ -36,7 +36,7 @@ const StyledTextField = styled(TextField)({
     },
   },
   marginBottom: '16px',
-  width: '3rem', // Adjust width for individual OTP fields
+  width: '3rem', 
   '& input': {
     textAlign: 'center',
   },
@@ -101,7 +101,6 @@ const OtpVerification: React.FC = () => {
       navigate('/profile-details');
     } else {
       alert('Invalid OTP');
-      // Reset OTP input fields and state
       setOtpDigits(['', '', '', '', '', '']);
       setOtpState('');
     }
@@ -109,9 +108,7 @@ const OtpVerification: React.FC = () => {
 
   const handleResendOtp = () => {
     setIsResendDisabled(true);
-    setResendTimer(60); // Reset timer
-    // Logic to resend OTP
-    // Example: dispatch action to resend OTP
+    setResendTimer(60); 
     console.log('Resending OTP...');
   };
 
@@ -119,7 +116,6 @@ const OtpVerification: React.FC = () => {
     const updatedOtp = [...otpDigits];
     updatedOtp[index] = value;
 
-    // Move focus to the next input field
     if (value && index < otpDigits.length - 1) {
       const nextIndex = index + 1;
       const nextInput = document.getElementById(`otp-input-${nextIndex}`);

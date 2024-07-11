@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Grid, MenuItem, Checkbox, FormControlLabel } from '@mui/material';
@@ -7,7 +7,6 @@ import { RootState } from '../store'; // Adjust the path to match your Redux set
 import { styled } from '@mui/system';
 
 
-// Define the options for day, month, year, states, and districts
 const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
 const months = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -44,8 +43,8 @@ const indianStates = [
   { value: 'Uttar Pradesh', districts: ['Agra', 'Aligarh', 'Ambedkar Nagar', 'Amethi (Chatrapati Sahuji Mahraj Nagar)', 'Amroha (J.P. Nagar)', 'Auraiya', 'Ayodhya', 'Azamgarh', 'Baghpat', 'Bahraich', 'Ballia', 'Balrampur', 'Banda', 'Barabanki', 'Bareilly', 'Basti', 'Bhadohi', 'Bijnor', 'Budaun', 'Bulandshahr', 'Chandauli', 'Chitrakoot', 'Deoria', 'Etah', 'Etawah', 'Farrukhabad', 'Fatehpur', 'Firozabad', 'Gautam Buddha Nagar', 'Ghaziabad', 'Ghazipur', 'Gonda', 'Gorakhpur', 'Hamirpur', 'Hapur (Panchsheel Nagar)', 'Hardoi', 'Hathras', 'Jalaun', 'Jaunpur', 'Jhansi', 'Kannauj', 'Kanpur Dehat', 'Kanpur Nagar', 'Kasganj', 'Kaushambi', 'Kheri', 'Kushinagar (Padrauna)', 'Lalitpur', 'Lucknow', 'Maharajganj', 'Mahoba', 'Mainpuri', 'Mathura', 'Mau', 'Meerut', 'Mirzapur', 'Moradabad', 'Muzaffarnagar', 'Pilibhit', 'Pratapgarh', 'Prayagraj (Allahabad)', 'Raebareli', 'Rampur', 'Saharanpur', 'Sambhal (Bhim Nagar)', 'Sant Kabir Nagar', 'Shahjahanpur', 'Shamli', 'Shravasti', 'Siddharthnagar', 'Sitapur', 'Sonbhadra', 'Sultanpur', 'Unnao', 'Varanasi'] },
   { value: 'Uttarakhand', districts: ['Almora', 'Bageshwar', 'Chamoli', 'Champawat', 'Dehradun', 'Haridwar', 'Nainital', 'Pauri Garhwal', 'Pithoragarh', 'Rudraprayag', 'Tehri Garhwal', 'Udham Singh Nagar', 'Uttarkashi'] },
   { value: 'West Bengal', districts: ['Alipurduar', 'Bankura', 'Birbhum', 'Cooch Behar', 'Dakshin Dinajpur (South Dinajpur)', 'Darjeeling', 'Hooghly', 'Howrah', 'Jalpaiguri', 'Jhargram', 'Kalimpong', 'Kolkata', 'Malda', 'Murshidabad', 'Nadia', 'North 24 Parganas', 'Paschim Medinipur (West Medinipur)', 'Paschim (West) Burdwan (Bardhaman)', 'Purba Burdwan (Bardhaman)', 'Purba Medinipur (East Medinipur)', 'Purulia', 'South 24 Parganas', 'Uttar Dinajpur (North Dinajpur)'] }
-  // Add more states and districts as needed
 ];
+
 const StyledContainer = styled(Container)({
   backgroundColor: '#ffffff',
   padding: '32px',
@@ -83,20 +82,38 @@ const ProfileDetails: React.FC = () => {
     termsAccepted: false,
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isButtonVisible, setIsButtonVisible] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Fetch mobile number from Redux store
+  
   const mobileNumber = useSelector((state: RootState) => state.user.mobileNumber);
 
+  useEffect(() => {
+    const areMandatoryFieldsFilled = () => {
+      const { firstName, day, month, year, gender, address, state, district, pincode, termsAccepted } = details;
+      return Boolean(firstName && day && month && year && gender && address && state && district && pincode && termsAccepted);
+    };
+  
+    setIsButtonVisible(areMandatoryFieldsFilled());
+  }, [details]);
+  
+  
+
   const handleContinue = () => {
-    if (!details.firstName || !details.day || !details.month || !details.year || !details.gender || !details.address || !details.state || !details.district || !details.pincode || !details.termsAccepted) {
+    if (!isButtonVisible) {
       alert('All fields are mandatory');
       return;
     }
 
     dispatch(setProfileDetails(details));
     navigate('/user-suggestions');
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!/[0-9]/.test(event.key)) {
+      event.preventDefault();
+    }
   };
 
   const handleInputChange = (key: string, value: string | boolean) => {
@@ -118,13 +135,12 @@ const ProfileDetails: React.FC = () => {
   };
 
   const handleStateChange = (state: string) => {
-    // Find the selected state object
     const selectedState = indianStates.find(s => s.value === state);
     if (selectedState) {
       setDetails(prevState => ({
         ...prevState,
         state,
-        district: '', // Reset district when state changes
+        district: '', 
       }));
     }
   };
@@ -140,7 +156,7 @@ const ProfileDetails: React.FC = () => {
     <StyledContainer>
       <Typography variant="h4">Personal Details</Typography>
 
-      {/* Name Fields Subcontainer */}
+    
       <StyledSubContainer>
         <Typography variant="h5">Name</Typography>
         <Grid container spacing={2}>
@@ -177,7 +193,7 @@ const ProfileDetails: React.FC = () => {
         </Grid>
       </StyledSubContainer>
 
-      {/* Date of Birth and Gender Subcontainer */}
+      
       <StyledSubContainer>
         <Typography variant="h5">Date of Birth</Typography>
         <Grid container spacing={2}>
@@ -243,7 +259,7 @@ const ProfileDetails: React.FC = () => {
         </Grid>
       </StyledSubContainer>
 
-      {/* Contact Details Subcontainer */}
+  
       <StyledSubContainer>
         <Typography variant="h5">Contact Details</Typography>
         <Grid container spacing={2}>
@@ -260,7 +276,7 @@ const ProfileDetails: React.FC = () => {
         </Grid>
       </StyledSubContainer>
 
-      {/* Address Fields Subcontainer */}
+      
       <StyledSubContainer>
         <Typography variant="h5">Address Details</Typography>
         <Grid container spacing={2}>
@@ -299,7 +315,7 @@ const ProfileDetails: React.FC = () => {
               margin="normal"
               InputLabelProps={{ shrink: true }}
             >
-              {/* Dynamic population of districts based on selected state */}
+      
               {details.state &&
                 indianStates
                   .find(s => s.value === details.state)
@@ -318,12 +334,12 @@ const ProfileDetails: React.FC = () => {
               error={!!errors.pincode}
               helperText={errors.pincode}
               InputLabelProps={{ shrink: true }}
+              onKeyPress={handleKeyPress}
             />
           </Grid>
         </Grid>
       </StyledSubContainer>
 
-      {/* Terms and Conditions */}
       <StyledSubContainer>
         <FormControlLabel
           control={<Checkbox checked={details.termsAccepted} onChange={(e) => handleInputChange('termsAccepted', e.target.checked)} />}
@@ -331,15 +347,16 @@ const ProfileDetails: React.FC = () => {
         />
       </StyledSubContainer>
 
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleContinue}
-        style={{ marginTop: '16px' }}
-        disabled={!details.termsAccepted}
-      >
-        Continue
-      </Button>
+      {isButtonVisible && (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleContinue}
+          style={{ marginTop: '16px' }}
+        >
+          Continue
+        </Button>
+      )}
     </StyledContainer>
   );
 };

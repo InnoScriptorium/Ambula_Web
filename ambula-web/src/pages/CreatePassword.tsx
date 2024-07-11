@@ -54,10 +54,10 @@ const CreatePassword: React.FC = () => {
     lowercase: false,
     numeric: false,
     symbol: false,
-    match: false,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -71,10 +71,10 @@ const CreatePassword: React.FC = () => {
       lowercase: /[a-z]/.test(pass),
       numeric: /[0-9]/.test(pass),
       symbol: /[!@#$%^&*(),.?":{}|<>]/.test(pass),
-      match: pass === confirmPass && pass !== '' && confirmPass !== '',
     };
 
     setIsPasswordValid(validations);
+    setPasswordMatchError(pass !== confirmPass && confirmPass !== '');
   };
 
   const handleTogglePasswordVisibility = () => {
@@ -86,8 +86,8 @@ const CreatePassword: React.FC = () => {
   };
 
   const handleCreatePassword = () => {
-    if (!isPasswordValid.match) {
-      alert('Passwords do not match');
+    if (!isPasswordValid.length || !isPasswordValid.uppercase || !isPasswordValid.lowercase || !isPasswordValid.numeric || !isPasswordValid.symbol || password !== confirmPassword) {
+      alert('Please correct the password fields before continuing.');
       return;
     }
     navigate('/congratulations');
@@ -119,7 +119,7 @@ const CreatePassword: React.FC = () => {
         value={confirmPassword}
         onChange={(e) => {
           setConfirmPassword(e.target.value);
-          validatePassword(password, e.target.value); // Validate on every change in confirm password
+          validatePassword(password, e.target.value); 
         }}
         fullWidth
         variant="outlined"
@@ -134,9 +134,11 @@ const CreatePassword: React.FC = () => {
           ),
         }}
       />
-      <Typography variant="body1" style={{ marginTop: '16px', color: isPasswordValid.match ? '#4caf50' : '#f44336' }}>
-        {isPasswordValid.match ? 'Password matched' : 'Password mismatched'}
-      </Typography>
+      {passwordMatchError && (
+        <Typography variant="body1" style={{ marginTop: '16px', color: '#f44336' }}>
+          Passwords do not match
+        </Typography>
+      )}
       <InfoContainer>
         <InfoItem variant="body1">
           {isPasswordValid.length ? (
@@ -179,12 +181,12 @@ const CreatePassword: React.FC = () => {
           At least one symbol
         </InfoItem>
         <InfoItem variant="body1">
-          {isPasswordValid.match ? (
+          {password === confirmPassword ? (
             <CheckIcon style={{ color: '#4caf50', marginRight: '8px' }} />
           ) : (
             <CloseIcon style={{ color: '#f44336', marginRight: '8px' }} />
           )}
-          Password and Confirm Password matched
+          Passwords match
         </InfoItem>
       </InfoContainer>
       <StyledButton variant="contained" color="primary" onClick={handleCreatePassword}>
